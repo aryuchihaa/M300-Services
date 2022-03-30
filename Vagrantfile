@@ -13,10 +13,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "database" do |db|
     db.vm.box = "ubuntu/xenial64"
 	db.vm.provider "virtualbox" do |vb|
-	  vb.memory = "1024"  
+	  vb.memory = "2048"  
 	end
     db.vm.hostname = "db-server-pamuk"
-    db.vm.network "private_network", ip: "192.168.2.99"
+    db.vm.network "private_network", ip: "192.168.60.1"
     # MySQL Port nur im Private Network sichtbar
 	#db.vm.network "forwarded_port", guest:3306, host:3306, auto_correct: false
   	db.vm.provision "shell", path: "db.sh"
@@ -25,10 +25,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "web" do |web|
     web.vm.box = "ubuntu/xenial64"
     web.vm.hostname = "webserver-pamuk"
-    web.vm.network "private_network", ip:"192.168.2.100" 
+    web.vm.network "private_network", ip:"192.168.60.4" 
 	web.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
 	web.vm.provider "virtualbox" do |vb|
-	  vb.memory = "1024"  
+	  vb.memory = "2048"  
 	end     
   	web.vm.synced_folder ".", "/var/www/html"  
 	web.vm.provision "shell", inline: <<-SHELL
