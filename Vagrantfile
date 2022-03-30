@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     owner: "www-data", group: "www-data"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "vagrant_ubuntuM300_LB2_jb"
+    vb.name = "vagrant_M300_pamuk"
     vb.memory = 1024
     vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
