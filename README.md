@@ -61,6 +61,11 @@ localhost:2988
 Über das Gui gelangt man dann auf das Login von Adminer und gibt die Login Daten ein.
 
 User: Admin
-Passwort: 
+Passwort: rootpw
+
 Quellenangaben
+
+ Ein Teil vom Code: https://gist.github.com/aurmil/e346aec64c3f6b6ea17259f41e3b6ab0 
+
+ Jorin hat mir geholfen, da ich ein Problem mit Vagrant hatte. Die Lösung war am Schluss das ganze zu löschen und neu zu installieren.
 
