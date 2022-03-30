@@ -4,7 +4,7 @@ time_zone = "Europe/zuerich"
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu1804"
  #portforwarding
-  config.vm.network "forwarded_port", guest: 80, host: 1234
+  config.vm.network "forwarded_port", guest: 80, host: 2988
   config.ssh.forward_agent = true
 #
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox",
