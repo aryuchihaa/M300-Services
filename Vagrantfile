@@ -89,7 +89,7 @@ if [ ! -f "$file" ]; then
 fi
 #mysql Login erstellen 
 sudo mysql <<-EOF
-  create user 'Admin'@'localhost' identified by 'Admin123';
+  create user 'Admin'@'localhost' identified by 'rootpw';
   Grant all privileges on *.* to 'Admin'@'localhost';
   Flush privileges;
 EOF
