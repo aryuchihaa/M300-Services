@@ -1,50 +1,98 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+# Konfiguration
+time_zone = "Europe/zuerich"
+#standart Vagrant erschaffen
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu1804"
+ #portforwarding
+  config.vm.network "forwarded_port", guest: 80, host: 1234
+  config.ssh.forward_agent = true
+#
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox",
+    owner: "www-data", group: "www-data"
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
-
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.define "database" do |db|
-    db.vm.box = "ubuntu/xenial64"
-	db.vm.provider "virtualbox" do |vb|
-	  vb.memory = "2048"  
-	end
-    db.vm.hostname = "db-server-pamuk"
-    db.vm.network "private_network", ip: "192.168.60.1"
-    # MySQL Port nur im Private Network sichtbar
-	#db.vm.network "forwarded_port", guest:3306, host:3306, auto_correct: false
-  	db.vm.provision "shell", path: "db.sh"
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "vagrant_ubuntuM300_LB2_jb"
+    vb.memory = 1024
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
-  
-  config.vm.define "web" do |web|
-    web.vm.box = "ubuntu/xenial64"
-    web.vm.hostname = "webserver-pamuk"
-    web.vm.network "private_network", ip:"192.168.60.4" 
-	web.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
-	web.vm.provider "virtualbox" do |vb|
-	  vb.memory = "2048"  
-	end     
-  	web.vm.synced_folder ".", "/var/www/html"  
-	web.vm.provision "shell", inline: <<-SHELL
-		sudo apt-get update
-		sudo apt-get -y install debconf-utils apache2 nmap
-		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password admin'
-		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password admin'
-		sudo apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
-		# Admininer SQL UI 
-		sudo mkdir /usr/share/adminer
-		sudo wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/latest.php
-		sudo ln -s /usr/share/adminer/latest.php /usr/share/adminer/adminer.php
-		echo "Alias /adminer.php /usr/share/adminer/adminer.php" | sudo tee /etc/apache2/conf-available/adminer.conf
-		sudo a2enconf adminer.conf 
-		sudo service apache2 restart 
-	  echo '127.0.0.1 localhost web-srv-01\n192.168.2.99 db-srv-01' > /etc/hosts
+
+  config.vm.provision "shell" do |s|
+    s.args = [time_zone]
+    s.inline = <<-SHELL
+# Zeitzone 
+TIME_ZONE=$1
+# einfach instalieren und nicht auf y oder n warten
+export DEBIAN_FRONTEND=noninteractive 
+# Zeitzone updaten
+timedatectl set-timezone "$TIME_ZONE"
+# Alle Pakages updaten
+apt-get update -q
+# Vim und Git installieren für repositorys clonen und vim für danach in das WWW file schreiben
+apt-get install -q -y vim git
+# instalieren von Apache Mariadb PHP 
+apt-get install -q -y apache2
+apt-get install -q -y php7.2 libapache2-mod-php7.2
+apt-get install -q -y php7.2-curl php7.2-gd php7.2-mbstring php7.2-mysql php7.2-xml php7.2-zip php7.2-bz2 php7.2-intl
+apt-get install -q -y mariadb-server mariadb-client
+a2enmod rewrite headers
+#restarten des Apache servers
+systemctl restart apache2
+# Vagrant Folder als Website root Folder sharen 
+dir='/vagrant/www'
+if [ ! -d "$dir" ]; then
+  mkdir "$dir"
+fi
+if [ ! -L /var/www/html ]; then
+  rm -rf /var/www/html
+  ln -fs "$dir" /var/www/html
+fi
+cd "$dir"
+# vhost
+file='/etc/apache2/sites-available/dev.conf'
+if [ ! -f "$file" ]; then
+  SITE_CONF=$(cat <<EOF
+<Directory /var/www/html>
+  AllowOverride All
+  Options +Indexes -MultiViews +FollowSymLinks
+  AddDefaultCharset utf-8
+  SetEnv ENVIRONMENT "development"
+  php_flag display_errors On
+  EnableSendfile Off
+</Directory>
+EOF
+)
+  echo "$SITE_CONF" > "$file"
+fi
+a2ensite dev
+systemctl reload apache2
+# Composer
+EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+ACTUAL_SIGNATURE="$(php -r "echo hash_file('SHA384', 'composer-setup.php');")"
+php composer-setup.php --quiet
+rm composer-setup.php
+mv composer.phar /usr/local/bin/composer
+chmod +x /usr/local/bin/composer
+sudo -H -u vagrant bash -c 'composer global require hirak/prestissimo'
+# OPcache
+file='opcache.php'
+if [ ! -f "$file" ]; then
+  wget -nv -O "$file" https://raw.githubusercontent.com/amnuts/opcache-gui/master/index.php
+fi
+# Adminer 
+file='adminer.php'
+if [ ! -f "$file" ]; then
+  wget -nv -O "$file" http://www.adminer.org/latest.php
+  wget -nv https://raw.githubusercontent.com/vrana/adminer/master/designs/pepa-linha/adminer.css
+fi
+#mysql Login erstellen 
+sudo mysql <<-EOF
+  create user 'Admin'@'localhost' identified by 'Admin123';
+  Grant all privileges on *.* to 'Admin'@'localhost';
+  Flush privileges;
+EOF
 SHELL
-	end  
- end
+  end
+end
