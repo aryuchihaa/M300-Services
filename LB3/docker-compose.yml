@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+  web:
+    image: mediawiki
+    ports:
+      - 80:80
+    volumes:
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - database:/var/www/data
+      - images:/var/www/html/images
+volumes:
+    database:
+    images:
