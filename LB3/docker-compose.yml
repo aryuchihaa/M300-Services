@@ -1,13 +1,31 @@
-version: '3.2'
+version: '3'
 services:
-  web:
+  mediawiki:
+    container_name: wiki
     image: mediawiki
+    restart: always
     ports:
       - 80:80
+    links:
+      - database
     volumes:
-      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
-      - database:/var/www/data
-      - images:/var/www/html/images
-volumes:
-    database:
-    images:
+      - $HOME/volumes/mediawiki/images:/var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      # - $HOME/volumes/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php
+
+  database:
+    image: mariadb
+    container_name: db
+    restart: always
+    ports:
+        - 3306:3306
+    environment:
+      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: my_wiki
+      MYSQL_USER: wikiuser
+      MYSQL_PASSWORD: example
+    volumes:
+       - $HOME/volumes/mysql/data:/var/lib/mysql
