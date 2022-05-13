@@ -1,6 +1,6 @@
 # Dokumentation zur Leistungsbeurteilung 3 
 ## Inhalt 
-1. **Aufgabenstellung**
+**1. Aufgabenstellung**
    
 **2. Vorbereitung**
 
@@ -19,11 +19,11 @@ Sie erstellen ein selbst gewähltes Projekt, welches auf der Docker Container-Te
 
 ## 2. Vorbereitung
 Als Vorbereitung für die LB3, habe ich mich verschiedene Online-Kurse zu Docker auf Youtube angeschaut. Techworld with Nana ist eine sehr guter Kanal, um darin einzusteigen und sich eine Übersicht zu bilden. Dazu haben wir mehrere Einführungen von unserem Lehrer bekommen und dazu praktische Übungen gelöst. Dafür habe ich mich auf Docker Hub schlau gemacht und 
-Als nächsten Schritt ging es zur Auswahl meines Services.
+Als nächsten Schritt ging es zur Auswahl meines Services. Ich habe mich für ein Mediawiki entschieden die mit einer MariaDB verbunden wird. Ich hab mir dann mehr Informationsquellen gesucht.
 
 
 ## 3. Umsetzung
-
+Zuerst habe ich mir die Installation vom Docker Desktop vorgenommen. Dann habe ich auf meinem Git-Repository einen "lb3" Ordner erstellt und darin mein docker-compose.yml File abgelegt. Nun ging es zur Hauptaufgabe und zwar dem Code. Auf diesen werde ich im Kapitel 4. detailliert eingehen. 
 
 ## 4. Code 
 
