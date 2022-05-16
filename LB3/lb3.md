@@ -26,7 +26,7 @@ Als nächsten Schritt ging es zur Auswahl meines Services. Ich habe mich für ei
 Zuerst habe ich mir die Installation vom Docker Desktop vorgenommen. Dann habe ich auf meinem Git-Repository einen "lb3" Ordner erstellt und darin mein docker-compose.yml File abgelegt. Nun ging es zur Hauptaufgabe und zwar dem Code. Auf diesen werde ich im Kapitel 4. detailliert eingehen. Der Code wurd auf dem docker-compose.yml File geschrieben. Der nächste Schritt war es auf GitBash in das Verzeichnis zu gehen und dort den Befehl **docker-compose up** einzugeben. Nach dem Ende vom Script konnte man sich durch die vergebene IP auf die Webübersicht von Mediawiki verbinden. Die Konfigurationen und Anbindung von MariaDB wurde manuell über das GUI erstellt.  
   
 Die Übersicht auf Mediawiki sah wie folgt aus:  
-![Alt-Text](C:\Users\pamuk\M300-Services\LB3\docker\wiki.PNG)
+!(C:\Users\pamuk\M300-Services\LB3\docker\wiki.PNG)
 
 ## 4. Code 
 
