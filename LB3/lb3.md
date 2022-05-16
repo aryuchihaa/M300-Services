@@ -23,11 +23,16 @@ Als nächsten Schritt ging es zur Auswahl meines Services. Ich habe mich für ei
 
 
 ## 3. Umsetzung
-Zuerst habe ich mir die Installation vom Docker Desktop vorgenommen. Dann habe ich auf meinem Git-Repository einen "lb3" Ordner erstellt und darin mein docker-compose.yml File abgelegt. Nun ging es zur Hauptaufgabe und zwar dem Code. Auf diesen werde ich im Kapitel 4. detailliert eingehen. 
+Zuerst habe ich mir die Installation vom Docker Desktop vorgenommen. Dann habe ich auf meinem Git-Repository einen "lb3" Ordner erstellt und darin mein docker-compose.yml File abgelegt. Nun ging es zur Hauptaufgabe und zwar dem Code. Auf diesen werde ich im Kapitel 4. detailliert eingehen. Der Code wurd auf dem docker-compose.yml File geschrieben. Der nächste Schritt war es auf GitBash in das Verzeichnis zu gehen und dort den Befehl **docker-compose up** einzugeben. Nach dem Ende vom Script konnte man sich durch die vergebene IP auf die Webübersicht von Mediawiki verbinden. Die Konfigurationen und Anbindung von MariaDB wurde manuell über das GUI erstellt. 
 
 ## 4. Code 
 
 
 ## 5. Reflexion
+Bei der LB3 viel es mir viel leichter mit den Tools umzugehen, da wir durch Vagrant LB2 Erfahrungen gesammelt haben und wir noch tiefer die Themen angeschaut haben. Ich habe ebenfalls durch die LB2 gelernt, wie man das Layout des md-Files strukturieren kann und dadurch viel mir die Dokumentation wesentlich einfacher. Die Arbeit mit Docker hat mir sehr gut gefallen. 
 
 ## 6. Quellenangaben
+[Linktext]https://github.com/mbe99/M300
+[Linktext]https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+[Linktext]https://hub.docker.com/
+[Linktext]https://www.mediawiki.org/wiki/Docker/Hub#Initial_docker-compose.yml
