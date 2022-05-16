@@ -58,7 +58,8 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin123
     volumes:
-       - $HOME/volumes/mysql/data:/var/lib/mysql```
+       - $HOME/volumes/mysql/data:/var/lib/mysql
+```
 
 ## 5. Reflexion
 Bei der LB3 viel es mir viel leichter mit den Tools umzugehen, da wir durch Vagrant LB2 Erfahrungen gesammelt haben und wir noch tiefer die Themen angeschaut haben. Ich habe ebenfalls durch die LB2 gelernt, wie man das Layout des md-Files strukturieren kann und dadurch viel mir die Dokumentation wesentlich einfacher. Die Arbeit mit Docker hat mir sehr gut gefallen. Die Screenshots konnte ich irgendwie nicht einbinden und habe es deswegen in einem Ordner auf dem Repository abgelegt.
