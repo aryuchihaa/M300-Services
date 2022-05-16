@@ -32,7 +32,7 @@ Zuerst habe ich mir die Installation vom Docker Desktop vorgenommen. Dann habe i
 Bei der LB3 viel es mir viel leichter mit den Tools umzugehen, da wir durch Vagrant LB2 Erfahrungen gesammelt haben und wir noch tiefer die Themen angeschaut haben. Ich habe ebenfalls durch die LB2 gelernt, wie man das Layout des md-Files strukturieren kann und dadurch viel mir die Dokumentation wesentlich einfacher. Die Arbeit mit Docker hat mir sehr gut gefallen. 
 
 ## 6. Quellenangaben
-[Linktext]https://github.com/mbe99/M300
-[Linktext]https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
-[Linktext]https://hub.docker.com/
-[Linktext]https://www.mediawiki.org/wiki/Docker/Hub#Initial_docker-compose.yml
+**Theorie**https://github.com/mbe99/M300
+**Layout GitHub**https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+**Images**https://hub.docker.com/
+**Code**https://www.mediawiki.org/wiki/Docker/Hub#Initial_docker-compose.yml
